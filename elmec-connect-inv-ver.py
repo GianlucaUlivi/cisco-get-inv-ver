@@ -74,20 +74,26 @@ for host in list:
         # Separate hosts
         print("-" * 40)
 
-    except AuthenticationException:
+    except AuthenticationException as err:
         print("AuthenticationException")
-        print("Exiting to avoid user locks")
-        break
+        print(err)
+        if not input("Continue execution? [NO]: ").upper in ["YES", "Y"]:
+            print("Exiting")
+            break
 
-    except BadHostKeyException:
+    except BadHostKeyException as err:
         print("BadHostKeyException")
-        print("Exiting")
-        break
+        print(err)
+        if not input("Continue execution? [NO]: ").upper in ["YES", "Y"]:
+            print("Exiting")
+            break
 
-    except SSHException:
+    except SSHException as err:
         print("SSHException")
-        print("Exiting")
-        break
+        print(err)
+        if not input("Continue execution? [NO]: ").upper in ["YES", "Y"]:
+            print("Exiting")
+            break
     
     finally:
         ssh_client.close()
