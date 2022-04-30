@@ -10,8 +10,15 @@ import json
 import regex
 
 # Load source list
-with open("in.json") as f:
-    list = json.load(f)
+try:
+    with open("in.json") as f:
+        list = json.load(f)
+except OSError as err:
+    print(err)
+
+except json.JSONDecodeError as err:
+    print(err)
+
 # Output JSON array
 hosts_out = []
 
@@ -56,8 +63,6 @@ for host in list:
                 if match(regex.CISCO_IOS_VERSION, line):    # Match only usefull lines
                     version = line.split(",")[2].strip().rstrip().split(" ")[1]     # Take only the version number and build
         print(f"Version: {version}")
-
-        ssh_client.close()
 
         # Format commands outputs into JSON
         json_host_output = {
