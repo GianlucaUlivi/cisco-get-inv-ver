@@ -1,0 +1,8 @@
+EMPTY_LINE = "^\s*$"
+
+CISCO_IOS_VERSION = "^Cisco\sIOS\sSoftware,\s.*$"
+
+# PID: CISCO1941/K9      , VID: V05 , SN: FCZ181192J3
+CISCO_INVENTORY_PID = "^PID:\s.*$"
+CISCO_INVENTORY_VID = "^.*VID:\s.*$"
+CISCO_INVENTORY_SN = "^.*SN:\s.*$"
