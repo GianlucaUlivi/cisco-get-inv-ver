@@ -7,7 +7,7 @@ with warnings.catch_warnings():
 from getpass import getpass
 from re import match
 import json
-import cisco_regex
+import regex
 
 # Load source list
 with open("in.json") as f:
@@ -34,10 +34,10 @@ for host in list:
         ssh_in, ssh_out, ssh_err = ssh_client.exec_command("show inventory")            # Execute inventory command
         for line in ssh_out.readlines():
             line = line.rstrip()
-            if not match(cisco_regex.EMPTY_LINE, line):   # Remove all empty lines from command output
-                if (match(cisco_regex.CISCO_INVENTORY_PID, line) and
-                    match(cisco_regex.CISCO_INVENTORY_VID, line) and
-                    match(cisco_regex.CISCO_INVENTORY_SN, line)):     # Match only usefull lines (will match device and power supply)
+            if not match(regex.EMPTY_LINE, line):   # Remove all empty lines from command output
+                if (match(regex.CISCO_INVENTORY_PID, line) and
+                    match(regex.CISCO_INVENTORY_VID, line) and
+                    match(regex.CISCO_INVENTORY_SN, line)):     # Match only usefull lines (will match device and power supply)
                     inventory_all.append(line)
         inventory_device = inventory_all[0].split(",")          # Take only device line and split it by comma
         # Clean outputs
@@ -52,8 +52,8 @@ for host in list:
         ssh_in, ssh_out, ssh_err = ssh_client.exec_command("show version")              # Execute version command
         for line in ssh_out.readlines():
             line = line.rstrip()
-            if not match(cisco_regex.EMPTY_LINE, line):   # Remove all empty lines from command output
-                if match(cisco_regex.CISCO_IOS_VERSION, line):    # Match only usefull lines
+            if not match(regex.EMPTY_LINE, line):   # Remove all empty lines from command output
+                if match(regex.CISCO_IOS_VERSION, line):    # Match only usefull lines
                     version = line.split(",")[2].strip().rstrip().split(" ")[1]     # Take only the version number and build
         print(f"Version: {version}")
 
