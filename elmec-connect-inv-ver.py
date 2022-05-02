@@ -104,5 +104,9 @@ for host in list:
         ssh_client.close()
 
 # Write all hosts' data into JSON file
-with open("out.json", "w") as output:
-    output.write(json.dumps(hosts_out))
+try:
+    with open("out.json", "w") as output:
+        output.write(json.dumps(hosts_out))
+        
+except OSError as err:
+    print(err)
